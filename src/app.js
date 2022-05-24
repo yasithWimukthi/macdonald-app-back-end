@@ -1,8 +1,8 @@
 const express = require("express");
 // const ExceptionHandler = require("./common/handlers/exception.handler");
 // const RouteNotFoundHandler = require("./common/handlers/route-not-found.handler");
-// const { knexConnection, initDatabase } = require("./database");
-// const cors = require("cors");
+const { knexConnection, initDatabase } = require("./database");
+const cors = require("cors");
 
 // // Import Routers
 // const HelthCheckRouter = require("./routers/helthCheck.router");
@@ -12,12 +12,12 @@ const express = require("express");
 
 const app = express();
 
-// app.use(cors());
-// app.use(express.json());
-// app.use(express.urlencoded({ extended: true }));
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // // Init database
-// initDatabase(knexConnection);
+initDatabase(knexConnection);
 // // Global middlewares - auth
 
 app.get("/", (req, res, next) => {
