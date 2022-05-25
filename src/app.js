@@ -12,8 +12,8 @@ const session = require('cookie-session');
 const userRouter = require('./routers/user.router');
 const portionsRouter = require('./routers/portion.router');
 
-// // Import Routers
-// const HelthCheckRouter = require("./routers/helthCheck.router");
+// Import Routers
+const HealthCheckRouter = require("./routers/healthCheck.router");
 // const AuthRouter = require("./routers/auth.router");
 // const CategoryRouter = require("./routers/category.router");
 // const ItemsRouter = require("./routers/items.router");
@@ -31,6 +31,15 @@ app.use(express.urlencoded({ extended: true }));
 initDatabase(knexConnection);
 // Global middlewares - auth
 
+/**
+ * @swagger
+ * /:
+ *   get:
+ *     description: Welcome to cafe-app-api v1.!
+ *     responses:
+ *       200:
+ *         description: Returns welcome message.
+ */
 app.get("/", (req, res, next) => {
   res.json({
     message: "Welcome to cafe-app-api v1.",
@@ -40,7 +49,7 @@ app.get("/", (req, res, next) => {
 // Routers
 app.use('/', userRouter);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-// app.use("/health", HelthCheckRouter);
+app.use("/health", HealthCheckRouter);
 // app.use("/api/v1/auth", AuthRouter);
 // app.use("/api/v1/categories", CategoryRouter);
 app.use("/api/v1/portion", portionsRouter);
