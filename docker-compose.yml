@@ -1,0 +1,19 @@
+version: '3.1'
+
+services:
+  db:
+    image: mysql
+    ports: 
+      - "3306:3306"
+    environment: 
+      - MYSQL_ROOT_PASSWORD=root256
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=user256
+      - MYSQL_DATABASE=my_db
+
+  api:
+    build: .
+    image: cafe-app-api
+    container_name: cafe-app-api1
+    ports: 
+      - "3000:3000"
