@@ -23,7 +23,6 @@ const knexConnection = Knex({
 const initDatabase = (knexObject) => {
   // pass the knex object to Model.
   Model.knex(knexObject);
-  console.log('[INFO] Database connected');
 };
 
 module.exports = {
