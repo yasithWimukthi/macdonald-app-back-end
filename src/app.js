@@ -4,6 +4,10 @@ const express = require("express");
 const { knexConnection, initDatabase } = require("./database");
 const cors = require("cors");
 
+const swaggerJSDoc = require("swagger-jsdoc");
+const swaggerUi = require("swagger-ui-express");
+const { swaggerSpec } = require("./swagger");
+
 // // Import Routers
 // const HelthCheckRouter = require("./routers/helthCheck.router");
 // const AuthRouter = require("./routers/auth.router");
@@ -26,7 +30,8 @@ app.get("/", (req, res, next) => {
   });
 });
 
-// // Routers
+// Routers
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 // app.use("/health", HelthCheckRouter);
 // app.use("/api/v1/auth", AuthRouter);
 // app.use("/api/v1/categories", CategoryRouter);
