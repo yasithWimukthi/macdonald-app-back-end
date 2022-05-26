@@ -9,7 +9,8 @@ const swaggerUi = require("swagger-ui-express");
 const { swaggerSpec } = require("./swagger");
 const passport = require('passport');
 const session = require('cookie-session');
-const userRoutes = require('./routes/user.route');
+const userRouter = require('./routers/user.router');
+const portionsRouter = require('./routers/portion.router');
 
 // // Import Routers
 // const HelthCheckRouter = require("./routers/helthCheck.router");
@@ -37,12 +38,12 @@ app.get("/", (req, res, next) => {
 });
 
 // Routers
-app.use('/', userRoutes);
+app.use('/', userRouter);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 // app.use("/health", HelthCheckRouter);
 // app.use("/api/v1/auth", AuthRouter);
 // app.use("/api/v1/categories", CategoryRouter);
-// app.use("/api/v1/items", ItemsRouter);
+app.use("/api/v1/portion", portionsRouter);
 
 // // Route not found handler
 // app.use(RouteNotFoundHandler);
