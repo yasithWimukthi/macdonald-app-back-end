@@ -1,6 +1,6 @@
 const express = require("express");
-// const ExceptionHandler = require("./common/handlers/exception.handler");
-// const RouteNotFoundHandler = require("./common/handlers/route-not-found.handler");
+const ExceptionHandler = require("./common/handlers/exception.handler");
+const RouteNotFoundHandler = require("./common/handlers/route-not-found.handler");
 const { knexConnection, initDatabase } = require("./database");
 const cors = require("cors");
 
@@ -13,7 +13,7 @@ const userRoutes = require('./routes/user.route');
 
 // Import Routers
 const HealthCheckRouter = require("./routers/healthCheck.router");
-// const AuthRouter = require("./routers/auth.router");
+const AuthRouter = require("./routers/auth.router");
 // const CategoryRouter = require("./routers/category.router");
 // const ItemsRouter = require("./routers/items.router");
 
@@ -49,14 +49,14 @@ app.get("/", (req, res, next) => {
 app.use('/', userRoutes);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use("/health", HealthCheckRouter);
-// app.use("/api/v1/auth", AuthRouter);
+app.use("/api/v1/auth", AuthRouter);
 // app.use("/api/v1/categories", CategoryRouter);
 // app.use("/api/v1/items", ItemsRouter);
 
-// // Route not found handler
-// app.use(RouteNotFoundHandler);
+// Route not found handler
+app.use(RouteNotFoundHandler);
 
-// // Exception handler
-// app.use(ExceptionHandler);
+// Exception handler
+app.use(ExceptionHandler);
 
 module.exports = app;
