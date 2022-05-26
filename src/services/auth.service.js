@@ -1,4 +1,4 @@
-// const bcrypt = require("bcrypt");
+const bcrypt = require("bcrypt");
 const User = require("../models/user.model");
 
 const getUser = async (key, value) => {
@@ -12,7 +12,12 @@ const createUser = async (data) => {
   return user;
 };
 
+const comparePassword = async (password, hash) => {
+  return await bcrypt.compare(password, hash);
+};
+
 module.exports = {
   getUser,
   createUser,
+  comparePassword,
 };
