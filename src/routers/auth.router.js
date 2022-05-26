@@ -15,6 +15,17 @@ const AuthRouter = express.Router();
  */
 AuthRouter.post("/customer/register", userRegisterHandler("customer"));
 
+/**
+ * @swagger
+ * /auth/customer/register:
+ *   post:
+ *     description: Welcome to cafe-app-api v1.!
+ *     responses:
+ *       200:
+ *         description: Returns welcome message.
+ */
+AuthRouter.post("/admin/register", userRegisterHandler("admin"));
+
 // // Login Routers
 // AuthRouter.post("/login", ValidationMiddleware(loginUser), authController.userLoginHandler());
 
