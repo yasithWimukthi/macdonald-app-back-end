@@ -7,6 +7,9 @@ const cors = require("cors");
 const swaggerJSDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 const { swaggerSpec } = require("./swagger");
+const passport = require('passport');
+const session = require('cookie-session');
+const userRoutes = require('./routes/user.route');
 
 // // Import Routers
 // const HelthCheckRouter = require("./routers/helthCheck.router");
@@ -16,13 +19,16 @@ const { swaggerSpec } = require("./swagger");
 
 const app = express();
 
+app.use(session({ secret: process.env.SESSION_KEY, resave: false, saveUninitialized: true }));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// // Init database
+// Init database
 initDatabase(knexConnection);
-// // Global middlewares - auth
+// Global middlewares - auth
 
 app.get("/", (req, res, next) => {
   res.json({
@@ -31,6 +37,7 @@ app.get("/", (req, res, next) => {
 });
 
 // Routers
+app.use('/', userRoutes);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 // app.use("/health", HelthCheckRouter);
 // app.use("/api/v1/auth", AuthRouter);

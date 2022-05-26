@@ -11,6 +11,10 @@ const env = cleanEnv(process.env, {
   DB_PASSWORD: str(),
   DB_NAME: str(),
   NODE_ENV: str({ default: "development" }),
+  FACEBOOK_CLIENT_ID: str(),
+  FACEBOOK_CLIENT_SECRET: str(),
+  FACEBOOK_CALLBACK_URL: str(),
+  SESSION_KEY: str(),
 });
 
 module.exports = env;
