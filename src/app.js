@@ -7,16 +7,16 @@ const cors = require("cors");
 const swaggerJSDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 const { swaggerSpec } = require("./swagger");
-const passport = require('passport');
-const session = require('cookie-session');
-const userRouter = require('./routers/user.router');
-const portionsRouter = require('./routers/portion.router');
-const ErrorHandler = require('./common/handlers/error.handler');
+const passport = require("passport");
+const session = require("cookie-session");
+const userRouter = require("./routers/user.router");
+const portionsRouter = require("./routers/portion.router");
+const ErrorHandler = require("./common/handlers/error.handler");
 
 // Import Routers
 const HealthCheckRouter = require("./routers/healthCheck.router");
 const AuthRouter = require("./routers/auth.router");
-// const CategoryRouter = require("./routers/category.router");
+const CategoryRouter = require("./routers/category.router");
 // const ItemsRouter = require("./routers/items.router");
 
 const app = express();
@@ -48,11 +48,11 @@ app.get("/", (req, res, next) => {
 });
 
 // Routers
-app.use('/', userRouter);
+app.use("/", userRouter);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use("/health", HealthCheckRouter);
 app.use("/api/v1/auth", AuthRouter);
-// app.use("/api/v1/categories", CategoryRouter);
+app.use("/api/v1/categories", CategoryRouter);
 app.use("/api/v1/portion", portionsRouter);
 
 app.use(ErrorHandler);
