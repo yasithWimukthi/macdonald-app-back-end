@@ -11,6 +11,7 @@ const passport = require('passport');
 const session = require('cookie-session');
 const userRouter = require('./routers/user.router');
 const portionsRouter = require('./routers/portion.router');
+const ErrorHandler = require('./common/handlers/error.handler');
 
 // Import Routers
 const HealthCheckRouter = require("./routers/healthCheck.router");
@@ -53,6 +54,8 @@ app.use("/health", HealthCheckRouter);
 app.use("/api/v1/auth", AuthRouter);
 // app.use("/api/v1/categories", CategoryRouter);
 app.use("/api/v1/portion", portionsRouter);
+
+app.use(ErrorHandler);
 
 // Route not found handler
 app.use(RouteNotFoundHandler);

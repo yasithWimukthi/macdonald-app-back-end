@@ -14,7 +14,8 @@ exports.create_portion = async (req, res, next) => {
     }); 
   })
   .catch(error => {
-    res.status(500).json({ error });
+    error.message = 'Portion already exists';
+    next(error);
   });
 }
 
@@ -28,7 +29,7 @@ exports.get_all_portions = async (req, res, next) => {
     });
   })
   .catch(error => {
-    res.status(500).json({ error });
+    next(error);
   });
 }
 
@@ -47,7 +48,7 @@ exports.update_portion = async (req, res, next) => {
     });
   })
   .catch(error => {
-    res.status(500).json({ error });
+    next(error);
   });
 }
 
@@ -64,6 +65,7 @@ exports.delete_portion = async (req, res, next) => {
     });
   })
   .catch(error => {
-    res.status(500).json({ error });
+    error.message = 'Portion does not exist';
+    next(error);
   });
 }
