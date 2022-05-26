@@ -1,33 +1,31 @@
 const express = require("express");
-const { userRegisterHandler } = require("../controllers/auth.controller");
+const { userRegisterHandler, userLoginHandler } = require("../controllers/auth.controller");
 
 const AuthRouter = express.Router();
 
 // Register Routers
-/**
- * @swagger
- * /auth/customer/register:
- *   post:
- *     description: Welcome to cafe-app-api v1.!
- *     responses:
- *       200:
- *         description: Returns welcome message.
- */
-AuthRouter.post("/customer/register", userRegisterHandler("customer"));
 
-/**
- * @swagger
- * /auth/customer/register:
- *   post:
- *     description: Welcome to cafe-app-api v1.!
- *     responses:
- *       200:
- *         description: Returns welcome message.
- */
 AuthRouter.post("/admin/register", userRegisterHandler("admin"));
+AuthRouter.post("/customer/register", userRegisterHandler("customer"));
+AuthRouter.post("/login", userLoginHandler());
 
-// // Login Routers
-// AuthRouter.post("/login", ValidationMiddleware(loginUser), authController.userLoginHandler());
+/**
+ * @swagger
+ * /auth/admin/register:
+ *   post:
+ *     tags:
+ *          - auth
+ *
+ * /auth/customer/register:
+ *   post:
+ *     tags:
+ *          - auth
+ *
+ * /auth/login:
+ *   post:
+ *     tags:
+ *          - auth
+ */
 
 // // Me Router
 // AuthRouter.get("/me", authMiddleware.AuthenticationMiddleware(), authController.getUserDetailsHandler());
