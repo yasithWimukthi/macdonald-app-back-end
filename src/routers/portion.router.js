@@ -9,4 +9,21 @@ router.patch('/:portionId', portionController.update_portion);
 
 router.delete('/:portionId', portionController.delete_portion);
 
+
+/**
+ * @swagger
+ * /api/v1/portions:
+ *  get:
+ *    tags: 
+ *      - portions
+ *    responses: 
+ *      '200': 
+ *        content:
+ *          'application/json': 
+ *              schema: 
+ *                $ref: '#/src/models/portion.model.js'
+ *            
+ *         
+ */
+
 module.exports = router;
