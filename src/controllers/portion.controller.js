@@ -1,3 +1,4 @@
+const { ForeignKeyViolationError } = require('db-errors');
 const Portion = require('../models/portion.model');
 
 exports.create_portion = async (req, res, next) => {
@@ -40,7 +41,7 @@ exports.update_portion = async (req, res, next) => {
   }
 
   Portion.query().patchAndFetchById(id, portion)
-  .throwIfNotFound()
+  .throwIfNotFound({ message: 'Portion does not exist' })
   .then(data => {
     res.status(200).json({
       message: 'Portion updated successfully',
@@ -57,7 +58,7 @@ exports.delete_portion = async (req, res, next) => {
   const id = req.params.portionId;
 
   Portion.query().deleteById(id)
-  .throwIfNotFound()
+  .throwIfNotFound({ message: 'Portion does not exist' })
   .then(data => {
     res.status(200).json({
       message: 'Portion deleted successfully',
@@ -65,7 +66,7 @@ exports.delete_portion = async (req, res, next) => {
     });
   })
   .catch(error => {
-    error.message = 'Portion does not exist';
+    if(error instanceof ForeignKeyViolationError) error.message = 'Cannot delete a portion which already belongs to a food item';
     next(error);
   });
 }

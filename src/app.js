@@ -53,7 +53,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use("/health", HealthCheckRouter);
 app.use("/api/v1/auth", AuthRouter);
 app.use("/api/v1/categories", CategoryRouter);
-app.use("/api/v1/portion", portionsRouter);
+app.use("/api/v1/portions", portionsRouter);
 
 app.use(ErrorHandler);
 
