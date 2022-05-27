@@ -5,19 +5,19 @@ class Category extends Model {
     return "category";
   }
 
-  //   static relationMappings() {
-  //     const Item = require("./item.model")
-  //     return {
-  //       items: {
-  //         relation: Model.HasManyRelation,
-  //         modelClass: Item,
-  //         join: {
-  //           from: "category.id",
-  //           to: "item.categoryId",
-  //         },
-  //       },
-  //     };
-  //   }
+  static relationMappings() {
+    const FoodItem = require("./food-item.model");
+    return {
+      food_items: {
+        relation: Model.HasManyRelation,
+        modelClass: FoodItem,
+        join: {
+          from: "category.id",
+          to: "food_item.categoryId",
+        },
+      },
+    };
+  }
 }
 
 module.exports = Category;

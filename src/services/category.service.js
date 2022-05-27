@@ -4,43 +4,23 @@ const getAllCategories = async () => {
   return await Category.query();
 };
 
-const getCategory = async (key, value) => {
-  const category = await Category.query().where(key, "=", value);
-  if (!category.length) return null;
-  return category;
-};
 const createCategory = async (data) => {
   const category = await Category.query().insert(data);
   return category;
 };
 
-// class CategoryService {
-//   async getAllCategories() {
-//     return await Category.query();
-//   }
-//   async createCategory(data) {
-//     const category = await Category.query().insert(data);
-//     return category;
-//   }
+const patchCategory = async (id, data) => {
+  const category = await Category.query().patchAndFetchById(id, data);
+  return category;
+};
 
-//   async getCategory(key, value) {
-//     const category = await Category.query().where(key, "=", value);
-//     if (!category.length) return null;
-//     return category;
-//   }
-
-//   async patchCategory({ id, name }) {
-//     const category = await Category.query().patchAndFetchById(id, { name });
-//     return category;
-//   }
-
-//   async deleteCategory({ id }) {
-//     return await Category.query().deleteById(id);
-//   }
-// }
+const deleteCategory = async (id) => {
+  return await Category.query().deleteById(id).throwIfNotFound({ message: "Category does not exist!" });
+};
 
 module.exports = {
   getAllCategories,
-  getCategory,
   createCategory,
+  patchCategory,
+  deleteCategory,
 };
