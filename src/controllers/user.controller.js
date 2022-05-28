@@ -1,5 +1,8 @@
 const passport = require('passport');
 const strategy = require('passport-facebook');
+const UnauthorizedException = require('../common/exceptions/UnauthorizedException');
+const { getUser } = require("../services/auth.service");
+const User = require('../models/user.model');
 
 const FacebookStrategy = strategy.Strategy;
 
@@ -18,15 +21,27 @@ passport.use(new FacebookStrategy(
     callbackURL: process.env.FACEBOOK_CALLBACK_URL,
     profileFields: ["email", "name"]
   },
-  (accessToken, refreshToken, profile, done) => {
+  async (accessToken, refreshToken, profile, done) => {
     const { id, email, first_name: firstName, last_name: lastName } = profile._json;
     const userData = {
-      id, 
+      first_name: firstName,
+      last_name: lastName,
+      username: id, 
       email,
-      firstName,
-      lastName
+      role: "customer"
     };
-    console.log(userData);
-    done(null, profile);
+
+    try {
+      const existingUser = await getUser("username", id);
+      if(existingUser) {
+        return done(null, {user: {email, id}});
+      } 
+      // create entry in db
+      await User.query().insert(userData);
+      done(null, {user: {email, id}});
+      
+    } catch (error) {
+      done(error, false, error.message);
+    }
   }
 ));

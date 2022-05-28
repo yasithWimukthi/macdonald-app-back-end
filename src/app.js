@@ -8,8 +8,7 @@ const swaggerJSDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 const { swaggerSpec } = require("./swagger");
 const passport = require("passport");
-const session = require("cookie-session");
-const userRouter = require("./routers/user.router");
+const session = require("express-session");
 const portionsRouter = require("./routers/portion.router");
 const ErrorHandler = require("./common/handlers/error.handler");
 
@@ -48,7 +47,6 @@ app.get("/", (req, res, next) => {
 });
 
 // Routers
-app.use("/", userRouter);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use("/health", HealthCheckRouter);
 app.use("/api/v1/auth", AuthRouter);

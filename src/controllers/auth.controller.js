@@ -68,4 +68,21 @@ const userLoginHandler = () => {
   };
 };
 
-module.exports = { userRegisterHandler, userLoginHandler };
+const facebookSuccessLoginHandler = (req, res, next) => {
+  if(!req.user) {
+    return res.status(401).json({ message: 'you are not logged in'});
+  } 
+  const accessToken = jwt.sign(
+    { user_id: req.user.id }, 
+    env.SECRET, 
+    { expiresIn: env.TOKEN_VALIDITY }
+  );
+  
+  res.status(200).json({ message: 'Facebook login success', accessToken });
+}
+
+module.exports = { 
+  userRegisterHandler, 
+  userLoginHandler, 
+  facebookSuccessLoginHandler 
+};
