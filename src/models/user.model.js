@@ -7,8 +7,11 @@ class User extends Model {
   }
 
   async $beforeInsert() {
-    const salt = await bcrypt.genSalt();
-    this.password = await bcrypt.hash(this.password, salt);
+    // facebook users dont have a password
+    if(this.password) {
+      const salt = await bcrypt.genSalt();
+      this.password = await bcrypt.hash(this.password, salt);
+    }
   }
 
   $formatJson(json) {
