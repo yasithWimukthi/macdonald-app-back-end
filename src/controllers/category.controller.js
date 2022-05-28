@@ -1,5 +1,7 @@
 const { UniqueViolationError, ForeignKeyViolationError } = require("objection");
-const { getAllCategories, createCategory, patchCategory, deleteCategory } = require("../services/category.service");
+const ConflictException = require("../common/exceptions/ConflictException");
+const NotFoundException = require("../common/exceptions/NotFoundException");
+const { getAllCategories, createCategory, patchCategory, deleteCategory, getCategory, getFootItemsOfCategory } = require("../services/category.service");
 
 const getAllCategoriesHandler = () => {
   return async (req, res, next) => {
@@ -21,8 +23,12 @@ const getAllCategoriesHandler = () => {
 const postCategoryHandler = () => {
   return async (req, res, next) => {
     try {
+      // Check for existing category with same name
+      let category = await getCategory("name", req.body.name);
+      if (category.length) throw new ConflictException("Category already exist!");
+
       // Create new category
-      const category = await createCategory(req.body);
+      category = await createCategory(req.body);
 
       res.status(201).json({
         message: "Category created successfully.",
@@ -30,7 +36,6 @@ const postCategoryHandler = () => {
         data: category,
       });
     } catch (error) {
-      if (error instanceof UniqueViolationError) error.message = "Category name already exist!";
       next(error);
     }
   };
@@ -39,8 +44,16 @@ const postCategoryHandler = () => {
 const patchCategoryHandler = () => {
   return async (req, res, next) => {
     try {
+      // Check for valid category
+      let category = await getCategory("id", req.params.id);
+      if (!category.length) throw new NotFoundException("Category does not exist!");
+
+      // Check for existing category with same name
+      category = await getCategory("name", req.body.name);
+      if (category.length) throw new ConflictException("Category already exist!");
+
       // Patch category
-      const category = await patchCategory(req.params.id, req.body);
+      category = await patchCategory(req.params.id, req.body);
 
       res.status(201).json({
         message: "Categories patched succefully",
@@ -48,8 +61,6 @@ const patchCategoryHandler = () => {
         data: category,
       });
     } catch (error) {
-      if (error instanceof UniqueViolationError) error.message = "Category name already exist!";
-      console.log(error);
       next(error);
     }
   };
@@ -58,6 +69,14 @@ const patchCategoryHandler = () => {
 const deleteCategoryHandler = () => {
   return async (req, res, next) => {
     try {
+      // Check for valid category
+      const category = await getCategory("id", req.params.id);
+      if (!category.length) throw new NotFoundException("Category does not exist!");
+
+      // Check for food items in category
+      const foodItems = await getFootItemsOfCategory(req.params.id);
+      if (foodItems.length) throw new ConflictException("Cannot delete category with existing foot items!");
+
       // Delete category
       await deleteCategory(req.params.id);
 
@@ -66,7 +85,6 @@ const deleteCategoryHandler = () => {
         success: true,
       });
     } catch (error) {
-      if (error instanceof ForeignKeyViolationError) error.message = "Cannot delete a category with existing food items!";
       next(error);
     }
   };
