@@ -34,11 +34,11 @@ passport.use(new FacebookStrategy(
     try {
       const existingUser = await getUser("username", id);
       if(existingUser) {
-        return done(null, {user: {email, id}});
+        return done(null, {email, id});
       } 
       // create entry in db
       await User.query().insert(userData);
-      done(null, {user: {email, id}});
+      done(null, {email, id});
       
     } catch (error) {
       done(error, false, error.message);

@@ -72,13 +72,18 @@ const facebookSuccessLoginHandler = (req, res, next) => {
   if(!req.user) {
     return res.status(401).json({ message: 'you are not logged in'});
   } 
+  
   const accessToken = jwt.sign(
-    { user_id: req.user.id }, 
-    env.SECRET, 
-    { expiresIn: env.TOKEN_VALIDITY }
+    { username: req.user.id }, 
+    process.env.SECRET, 
+    { expiresIn: process.env.TOKEN_VALIDITY }
   );
   
-  res.status(200).json({ message: 'Facebook login success', accessToken });
+  res.status(200).json({ 
+    message: 'Facebook login success', 
+    accessToken,
+    expiresIn: process.env.TOKEN_VALIDITY,
+  });
 }
 
 module.exports = { 
