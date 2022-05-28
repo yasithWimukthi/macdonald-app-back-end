@@ -1,7 +1,7 @@
 const ConflictException = require("../common/exceptions/ConflictException");
 const NotFoundException = require("../common/exceptions/NotFoundException");
 const { getCategory } = require("../services/category.service");
-const { getAllFoodItems, createFoodItem, getFoodItem, getFoodItemsByCategory, patchFoodItem } = require("../services/food-item.services");
+const { getAllFoodItems, createFoodItem, getFoodItem, getFoodItemsByCategory, patchFoodItem, deleteFoodItem } = require("../services/food-item.services");
 const { getPortion } = require("../services/portion.service");
 
 const getFoodItemsOfCategoryHandler = () => {
@@ -104,8 +104,28 @@ const patchFoodItemHandler = () => {
   };
 };
 
+const deleteFoodItemsHandler = () => {
+  return async (req, res, next) => {
+    try {
+      // Check for valid fooditem
+      if (!(await getFoodItem("id", req.params.id))) throw new NotFoundException("Food item does not exist!");
+
+      //Delete Food Item
+      await deleteFoodItem(req.params.id);
+
+      res.status(201).json({
+        message: "FoodItem created succesfully",
+        success: true,
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+};
+
 module.exports = {
   getFoodItemsOfCategoryHandler,
   createFoodItemHandler,
   patchFoodItemHandler,
+  deleteFoodItemsHandler,
 };
