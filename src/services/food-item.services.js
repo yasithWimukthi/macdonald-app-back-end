@@ -14,7 +14,6 @@ const createFoodItem = async ({ name, category, portions }) => {
   let foodItem = await Category.relatedQuery("foodItems").for(category).insert({ name });
 
   for (const portion of portions) {
-    console.log(portion);
     await Portion.relatedQuery("foodItems").for(portion.id).relate({
       id: foodItem.id,
       price: portion.price,
