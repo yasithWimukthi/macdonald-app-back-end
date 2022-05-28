@@ -54,8 +54,8 @@ const patchCategoryHandler = () => {
       // Patch category
       category = await patchCategory(req.params.id, req.body);
 
-      res.status(201).json({
-        message: "Categories patched succefully",
+      res.status(200).json({
+        message: "Category patched succefully",
         success: true,
         data: category,
       });
@@ -80,7 +80,7 @@ const deleteCategoryHandler = () => {
       await deleteCategory(req.params.id);
 
       res.status(200).json({
-        message: "Category deleted succefully",
+        message: "Category deleted succesfully",
         success: true,
       });
     } catch (error) {

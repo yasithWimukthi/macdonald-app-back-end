@@ -24,7 +24,7 @@ const deleteCategory = async (id) => {
 };
 
 const getFoodItemsOfCategory = async (id) => {
-  return await Category.relatedQuery("food_items").for(id);
+  return await Category.relatedQuery("foodItems").for(id);
 };
 
 module.exports = {
