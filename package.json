@@ -10,7 +10,7 @@
     "migrate": "knex migrate:latest",
     "rollback": "knex migrate:rollback",
     "seed": "knex seed:run",
-    "flush": "knex migrate:rollback && knex migrate:latest",
+    "flush": "knex migrate:rollback && knex migrate:latest && knex seed:run",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

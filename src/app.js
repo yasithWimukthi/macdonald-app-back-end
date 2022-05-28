@@ -16,6 +16,8 @@ const ErrorHandler = require("./common/handlers/error.handler");
 const HealthCheckRouter = require("./routers/healthCheck.router");
 const AuthRouter = require("./routers/auth.router");
 const CategoryRouter = require("./routers/category.router");
+const FoodItemRouter = require("./routers/food-item.router");
+
 // const ItemsRouter = require("./routers/items.router");
 
 const app = express();
@@ -52,6 +54,9 @@ app.use("/health", HealthCheckRouter);
 app.use("/api/v1/auth", AuthRouter);
 app.use("/api/v1/categories", CategoryRouter);
 app.use("/api/v1/portions", portionsRouter);
+app.use("/api/v1/food-items", FoodItemRouter);
+
+// app.use(ErrorHandler);
 
 // Route not found handler
 app.use(RouteNotFoundHandler);

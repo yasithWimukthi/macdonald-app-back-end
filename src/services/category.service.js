@@ -23,7 +23,7 @@ const deleteCategory = async (id) => {
   return await Category.query().deleteById(id).throwIfNotFound({ message: "Category does not exist!" });
 };
 
-const getFootItemsOfCategory = async (id) => {
+const getFoodItemsOfCategory = async (id) => {
   return await Category.relatedQuery("food_items").for(id);
 };
 
@@ -33,5 +33,5 @@ module.exports = {
   getCategory,
   patchCategory,
   deleteCategory,
-  getFootItemsOfCategory,
+  getFoodItemsOfCategory,
 };
