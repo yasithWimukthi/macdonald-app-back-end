@@ -4,7 +4,6 @@ const { userRegisterHandler, userLoginHandler } = require("../controllers/auth.c
 const AuthRouter = express.Router();
 
 // Register Routers
-
 AuthRouter.post("/admin/register", userRegisterHandler("admin"));
 AuthRouter.post("/customer/register", userRegisterHandler("customer"));
 AuthRouter.post("/login", userLoginHandler());
@@ -26,10 +25,5 @@ AuthRouter.post("/login", userLoginHandler());
  *     tags:
  *          - auth
  */
-
-// // Me Router
-// AuthRouter.get("/me", authMiddleware.AuthenticationMiddleware(), authController.getUserDetailsHandler());
-// // !allow email change?
-// AuthRouter.patch("/me", authMiddleware.AuthenticationMiddleware(), ValidationMiddleware(patchUser), authController.patchUserHandler());
 
 module.exports = AuthRouter;

@@ -1,13 +1,14 @@
 const express = require("express");
 const { getAllCategoriesHandler, postCategoryHandler, patchCategoryHandler, deleteCategoryHandler } = require("../controllers/category.controller");
+const { AuthorizationMiddleware } = require("../middlewares/authorization.middleware");
 
 const CategoryRouter = express.Router();
 
 // Category Routers
 CategoryRouter.get("/", getAllCategoriesHandler());
-CategoryRouter.post("/", postCategoryHandler());
-CategoryRouter.patch("/:id", patchCategoryHandler());
-CategoryRouter.delete("/:id", deleteCategoryHandler());
+CategoryRouter.post("/", AuthorizationMiddleware("admin"), postCategoryHandler());
+CategoryRouter.patch("/:id", AuthorizationMiddleware("admin"), patchCategoryHandler());
+CategoryRouter.delete("/:id", AuthorizationMiddleware("admin"), deleteCategoryHandler());
 
 /**
  * @swagger

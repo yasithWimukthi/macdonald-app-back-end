@@ -1,4 +1,3 @@
-const { UniqueViolationError, ForeignKeyViolationError } = require("objection");
 const ConflictException = require("../common/exceptions/ConflictException");
 const NotFoundException = require("../common/exceptions/NotFoundException");
 const { getAllCategories, createCategory, patchCategory, deleteCategory, getCategory, getFootItemsOfCategory } = require("../services/category.service");
