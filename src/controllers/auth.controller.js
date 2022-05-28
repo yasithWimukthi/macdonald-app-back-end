@@ -45,7 +45,7 @@ const userLoginHandler = () => {
       if (!(await comparePassword(req.body.password, user.password))) throw new UnauthorizedException("Invalid email or password!");
 
       // Generate jwt token
-      const token = jwt.sign({ user_id: user.username }, env.SECRET, {
+      const token = jwt.sign({ username: user.username }, env.SECRET, {
         expiresIn: env.TOKEN_VALIDITY,
       });
 
