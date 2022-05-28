@@ -15,6 +15,7 @@ class Portion extends Model {
           through: {
             from: "food_item_has_portion.portion_id",
             to: "food_item_has_portion.food_item_id",
+            extra: ["price", "calories", "is_available"],
           },
           to: "food_item.id",
         },

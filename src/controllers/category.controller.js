@@ -1,6 +1,6 @@
 const ConflictException = require("../common/exceptions/ConflictException");
 const NotFoundException = require("../common/exceptions/NotFoundException");
-const { getAllCategories, createCategory, patchCategory, deleteCategory, getCategory, getFootItemsOfCategory } = require("../services/category.service");
+const { getAllCategories, createCategory, patchCategory, deleteCategory, getCategory, getFoodItemsOfCategory } = require("../services/category.service");
 
 const getAllCategoriesHandler = () => {
   return async (req, res, next) => {
@@ -73,7 +73,7 @@ const deleteCategoryHandler = () => {
       if (!category.length) throw new NotFoundException("Category does not exist!");
 
       // Check for food items in category
-      const foodItems = await getFootItemsOfCategory(req.params.id);
+      const foodItems = await getFoodItemsOfCategory(req.params.id);
       if (foodItems.length) throw new ConflictException("Cannot delete category with existing foot items!");
 
       // Delete category

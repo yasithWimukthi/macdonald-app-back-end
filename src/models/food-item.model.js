@@ -4,7 +4,7 @@ class FoodItem extends Model {
   static get tableName() {
     return "food_item";
   }
-  
+
   static get relationMappings() {
     const Category = require("./category.model");
     const Portion = require("./portion.model");
@@ -13,24 +13,25 @@ class FoodItem extends Model {
       category: {
         relation: Model.BelongsToOneRelation,
         modelClass: Category,
-        // filter: (query) => query.select("id", "name"),
+        filter: (query) => query.select("id", "name"),
         join: {
           from: "food_item.categoryId",
           to: "category.id",
         },
       },
-      portion: {
+      portions: {
         relation: Model.ManyToManyRelation,
         modelClass: Portion,
         join: {
-          from: 'food_item.id',
-          through: {          
-            from: 'food_item_has_portion.food_item_id',
-            to: 'food_item_has_portion.portion_id'
+          from: "food_item.id",
+          through: {
+            from: "food_item_has_portion.food_item_id",
+            to: "food_item_has_portion.portion_id",
+            extra: ["price", "calories", "is_available"],
           },
-          to: 'portion.id',
-        }
-      }
+          to: "portion.id",
+        },
+      },
     };
   }
 }
