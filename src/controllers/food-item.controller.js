@@ -116,6 +116,7 @@ const deleteFoodItemsHandler = () => {
 
       res.status(201).json({
         message: "Food Item deleted succesfully",
+
         success: true,
       });
     } catch (error) {
