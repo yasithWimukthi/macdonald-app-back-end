@@ -14,11 +14,12 @@ const createFoodItem = async ({ name, category, portions }) => {
   let foodItem = await Category.relatedQuery("foodItems").for(category).insert({ name });
 
   for (const portion of portions) {
-    await Portion.relatedQuery("foodItem").for(portion.id).relate({
+    console.log(portion);
+    await Portion.relatedQuery("foodItems").for(portion.id).relate({
       id: foodItem.id,
       price: portion.price,
       calories: portion.calories,
-      is_available: portion.isAvailable,
+      isAvailable: portion.isAvailable,
     });
   }
 
@@ -41,10 +42,18 @@ const patchFoodItem = async (data) => {
   return foodItem;
 };
 
+const deleteFoodItem = async (id) => {
+  await FoodItem.relatedQuery("portions").for(id).unrelate();
+  // await Category.relatedQuery("foodItems").for(id).unrelate().delete;
+  await FoodItem.query().deleteById(id);
+  return;
+};
+
 module.exports = {
   getAllFoodItems,
   getFoodItem,
   createFoodItem,
   getFoodItemsByCategory,
   patchFoodItem,
+  deleteFoodItem,
 };
