@@ -28,7 +28,7 @@ const AuthorizationMiddleware = (roleAllowed) => {
 
       if (user.role != roleAllowed) throw new ForbiddenException();
 
-      req.user = decoded;
+      req.user = user;
       next();
     } catch (error) {
       next(error);
