@@ -21,6 +21,21 @@ class User extends Model {
     return json;
   }
 
+  static get relationMappings() {
+    const Order = require("./order.model");
+
+    return {
+      orders: {
+        relation: Model.HasManyRelation,
+        modelClass: Order,
+        join: {
+          from: "user.id",
+          to: "order.user_id",
+        },
+      },
+    };
+  }
+
   //   static relationMappings = () => {
   //     return {
   //       roles: {

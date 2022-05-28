@@ -9,13 +9,15 @@ const swaggerUi = require("swagger-ui-express");
 const { swaggerSpec } = require("./swagger");
 const passport = require("passport");
 const session = require("express-session");
-const portionsRouter = require("./routers/portion.router");
+const errorHandler = require('./common/handlers/error.handler');
 
 // Import Routers
+const portionsRouter = require("./routers/portion.router");
 const HealthCheckRouter = require("./routers/healthCheck.router");
 const AuthRouter = require("./routers/auth.router");
 const CategoryRouter = require("./routers/category.router");
 const FoodItemRouter = require("./routers/food-item.router");
+const orderRouter = require("./routers/order.router");
 
 const app = express();
 
@@ -52,9 +54,11 @@ app.use("/api/v1/auth", AuthRouter);
 app.use("/api/v1/categories", CategoryRouter);
 app.use("/api/v1/portions", portionsRouter);
 app.use("/api/v1/food-items", FoodItemRouter);
+app.use("/api/v1/orders", orderRouter);
 
 // Route not found handler
 app.use(RouteNotFoundHandler);
+app.use(errorHandler);
 
 // Exception handler
 app.use(ExceptionHandler);

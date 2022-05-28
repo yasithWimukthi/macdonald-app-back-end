@@ -8,8 +8,22 @@ class FoodItem extends Model {
   static get relationMappings() {
     const Category = require("./category.model");
     const Portion = require("./portion.model");
+    const Order = require("./order.model");
 
     return {
+      orders: {
+        relation: Model.ManyToManyRelation,
+        modelClass: Order,
+        join: {
+          from: 'food_item.id',
+          through: {          
+            from: 'order_has_food_item.food_item_id',
+            to: 'order_has_food_item.order_id',
+            extra: ['quantity']
+          },
+          to: 'order.id',
+        }
+      },
       category: {
         relation: Model.BelongsToOneRelation,
         modelClass: Category,
