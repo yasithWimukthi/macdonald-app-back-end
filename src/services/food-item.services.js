@@ -3,7 +3,7 @@ const FoodItem = require("../models/food-item.model");
 const Portion = require("../models/portion.model");
 
 const getAllFoodItems = async () => {
-  return await FoodItem.query().withGraphFetched("[category,portions.[foodItem]]");
+  return await FoodItem.query().withGraphFetched("[category,portions]");
 };
 
 const getFoodItem = async (key, value) => {
@@ -11,7 +11,7 @@ const getFoodItem = async (key, value) => {
 };
 
 const createFoodItem = async ({ name, category, portions }) => {
-  let foodItem = await Category.relatedQuery("food_items").for(category).insert({ name });
+  let foodItem = await Category.relatedQuery("foodItems").for(category).insert({ name });
 
   for (const portion of portions) {
     await Portion.relatedQuery("foodItem").for(portion.id).relate({

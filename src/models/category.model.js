@@ -8,7 +8,7 @@ class Category extends Model {
   static relationMappings() {
     const FoodItem = require("./food-item.model");
     return {
-      food_items: {
+      foodItems: {
         relation: Model.HasManyRelation,
         modelClass: FoodItem,
         join: {

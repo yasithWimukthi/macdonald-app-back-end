@@ -22,12 +22,17 @@ class FoodItem extends Model {
       portions: {
         relation: Model.ManyToManyRelation,
         modelClass: Portion,
+        // filter: (query) => query.select("id", "name", "price", "calories", "is_available"),
         join: {
           from: "food_item.id",
           through: {
             from: "food_item_has_portion.food_item_id",
             to: "food_item_has_portion.portion_id",
-            extra: ["price", "calories", "is_available"],
+            extra: {
+              price: "price",
+              calories: "calories",
+              isAvailable: "is_available",
+            },
           },
           to: "portion.id",
         },

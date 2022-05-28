@@ -7,7 +7,7 @@ class Portion extends Model {
     const FoodItem = require("./food-item.model");
 
     return {
-      foodItem: {
+      foodItems: {
         relation: Model.ManyToManyRelation,
         modelClass: FoodItem,
         join: {
@@ -15,7 +15,11 @@ class Portion extends Model {
           through: {
             from: "food_item_has_portion.portion_id",
             to: "food_item_has_portion.food_item_id",
-            extra: ["price", "calories", "is_available"],
+            extra: {
+              price: "price",
+              calories: "calories",
+              isAvailable: "is_available",
+            },
           },
           to: "food_item.id",
         },
