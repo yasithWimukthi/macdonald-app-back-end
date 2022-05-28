@@ -4,11 +4,11 @@ const { AuthorizationMiddleware } = require("../middlewares/authorization.middle
 
 router.get('/', portionController.get_all_portions);
 
-router.post('/', AuthorizationMiddleware('customer'), portionController.create_portion);
+router.post('/', AuthorizationMiddleware('admin'), portionController.create_portion);
 
-router.patch('/:portionId', AuthorizationMiddleware('customer'),portionController.update_portion);
+router.patch('/:portionId', AuthorizationMiddleware('admin'),portionController.update_portion);
 
-router.delete('/:portionId', AuthorizationMiddleware('customer'),portionController.delete_portion);
+router.delete('/:portionId', AuthorizationMiddleware('admin'),portionController.delete_portion);
 
 
 /**

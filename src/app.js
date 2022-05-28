@@ -53,8 +53,6 @@ app.use("/api/v1/auth", AuthRouter);
 app.use("/api/v1/categories", CategoryRouter);
 app.use("/api/v1/portions", portionsRouter);
 
-app.use(ErrorHandler);
-
 // Route not found handler
 app.use(RouteNotFoundHandler);
 
