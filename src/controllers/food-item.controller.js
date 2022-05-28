@@ -1,5 +1,6 @@
 const ConflictException = require("../common/exceptions/ConflictException");
 const NotFoundException = require("../common/exceptions/NotFoundException");
+
 const { getCategory } = require("../services/category.service");
 const { getAllFoodItems, createFoodItem, getFoodItem, getFoodItemsByCategory, patchFoodItem, deleteFoodItem } = require("../services/food-item.services");
 const { getPortion } = require("../services/portion.service");
@@ -20,7 +21,7 @@ const getFoodItemsOfCategoryHandler = () => {
       }
 
       res.status(200).json({
-        message: "FoodItems fetched succefully",
+        message: "Food Items fetched succesfully",
         success: true,
         data: foodItems,
       });
@@ -34,7 +35,7 @@ const createFoodItemHandler = () => {
   return async (req, res, next) => {
     try {
       // Check for fooditem with same name
-      if (await getFoodItem("name", req.body.name)) throw new ConflictException("Fooditem already exist with same name!");
+      if (await getFoodItem("name", req.body.name)) throw new ConflictException("Food item already exist with same name!");
 
       //   Check for valid category
       const category = await getCategory("id", req.body.category);
@@ -49,7 +50,7 @@ const createFoodItemHandler = () => {
       const foodItem = await createFoodItem(req.body);
 
       res.status(201).json({
-        message: "FoodItem created succesfully",
+        message: "Food Item created succesfully",
         success: true,
         data: foodItem,
       });
@@ -93,8 +94,8 @@ const patchFoodItemHandler = () => {
       // Get all food items
       const foodItem = await patchFoodItem(data);
 
-      res.status(201).json({
-        message: "FoodItem created succesfully",
+      res.status(200).json({
+        message: "FoodItem updated succesfully",
         success: true,
         data: foodItem,
       });
@@ -114,7 +115,7 @@ const deleteFoodItemsHandler = () => {
       await deleteFoodItem(req.params.id);
 
       res.status(201).json({
-        message: "FoodItem created succesfully",
+        message: "Food Item deleted succesfully",
         success: true,
       });
     } catch (error) {
