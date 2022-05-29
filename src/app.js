@@ -58,7 +58,7 @@ app.use("/api/v1/orders", orderRouter);
 
 // Route not found handler
 app.use(RouteNotFoundHandler);
-app.use(errorHandler);
+// app.use(errorHandler);
 
 // Exception handler
 app.use(ExceptionHandler);
