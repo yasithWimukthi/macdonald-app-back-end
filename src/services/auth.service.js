@@ -7,7 +7,6 @@ const getUser = async (key, value) => {
 };
 
 const createUser = async (data) => {
-  console.log(data);
   const user = await User.query().insert(data);
   return user;
 };

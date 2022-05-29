@@ -5,7 +5,7 @@ const { getCategory } = require("../services/category.service");
 const { getAllFoodItems, createFoodItem, getFoodItem, getFoodItemsByCategory, patchFoodItem, deleteFoodItem } = require("../services/food-item.services");
 const { getPortion } = require("../services/portion.service");
 
-const getFoodItemsOfCategoryHandler = () => {
+const getFoodItemsHandler = () => {
   return async (req, res, next) => {
     try {
       let foodItems;
@@ -15,7 +15,7 @@ const getFoodItemsOfCategoryHandler = () => {
       //   Get specific food items in a category when specified as query params
       else {
         //   Check for valid category
-        const category = await getCategory("id", req.body.category);
+        const category = await getCategory("id", req.query.categoryId);
         if (!category.length) throw new NotFoundException("Category does not exist!");
         foodItems = await getFoodItemsByCategory(req.query.categoryId);
       }
@@ -114,7 +114,7 @@ const deleteFoodItemsHandler = () => {
       //Delete Food Item
       await deleteFoodItem(req.params.id);
 
-      res.status(201).json({
+      res.status(200).json({
         message: "Food Item deleted succesfully",
 
         success: true,
@@ -126,7 +126,7 @@ const deleteFoodItemsHandler = () => {
 };
 
 module.exports = {
-  getFoodItemsOfCategoryHandler,
+  getFoodItemsHandler,
   createFoodItemHandler,
   patchFoodItemHandler,
   deleteFoodItemsHandler,

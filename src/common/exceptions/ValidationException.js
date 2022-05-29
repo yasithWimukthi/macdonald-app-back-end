@@ -1,7 +1,5 @@
 const ApiException = require("./ApiException");
 
-// export const RouteNotFoundExceptionType = "ROUTE_NOT_FOUND";
-
 class ValidationException extends ApiException {
   constructor(errors) {
     const validationSanitized = errors.map((err) => {

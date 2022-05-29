@@ -5,8 +5,6 @@ const env = require("../configs");
 const ConflictException = require("../common/exceptions/ConflictException");
 const UnauthorizedException = require("../common/exceptions/UnauthorizedException");
 
-// const ValidationException = require("../../common/exceptions/ValidationException");
-
 const { getUser, createUser, comparePassword } = require("../services/auth.service");
 
 const userRegisterHandler = (role) => {
@@ -69,25 +67,21 @@ const userLoginHandler = () => {
 };
 
 const facebookSuccessLoginHandler = (req, res, next) => {
-  if(!req.user) {
-    return res.status(401).json({ message: 'you are not logged in'});
-  } 
-  
-  const accessToken = jwt.sign(
-    { username: req.user.id }, 
-    process.env.SECRET, 
-    { expiresIn: process.env.TOKEN_VALIDITY }
-  );
-  
-  res.status(200).json({ 
-    message: 'Facebook login success', 
+  if (!req.user) {
+    return res.status(401).json({ message: "you are not logged in" });
+  }
+
+  const accessToken = jwt.sign({ username: req.user.id }, process.env.SECRET, { expiresIn: process.env.TOKEN_VALIDITY });
+
+  res.status(200).json({
+    message: "Facebook login success",
     accessToken,
     expiresIn: process.env.TOKEN_VALIDITY,
   });
-}
+};
 
-module.exports = { 
-  userRegisterHandler, 
-  userLoginHandler, 
-  facebookSuccessLoginHandler 
+module.exports = {
+  userRegisterHandler,
+  userLoginHandler,
+  facebookSuccessLoginHandler,
 };
